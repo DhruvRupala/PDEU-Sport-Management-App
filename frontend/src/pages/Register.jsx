@@ -16,9 +16,11 @@ function Register() {
   useEffect(() => {
     document.body.style.overflow = "hidden"
     document.documentElement.style.overflow = "hidden"
+    document.body.style.margin = "0"
     return () => {
       document.body.style.overflow = ""
       document.documentElement.style.overflow = ""
+      document.body.style.margin = ""
     }
   }, [])
 
@@ -210,13 +212,13 @@ function Register() {
 // ── Styles ────────────────────────────────────────────────────────
 const pageWrapper = {
   position: "relative",
-  height: "100vh",
-  overflow: "hidden",
+  height: "calc(100vh - 130px)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "20px",
   fontFamily: "'Inter', sans-serif",
+  boxSizing: "border-box",
 }
 
 const bgLayer = {
@@ -241,35 +243,36 @@ const glassCard = {
   zIndex: 2,
   width: "100%",
   maxWidth: "640px",
-  maxHeight: "calc(100vh - 40px)",
+  maxHeight: "100%",
   overflowY: "auto",
   background: "rgba(255,255,255,0.10)",
   backdropFilter: "blur(24px)",
   WebkitBackdropFilter: "blur(24px)",
   border: "1px solid rgba(255,255,255,0.22)",
   borderRadius: "24px",
-  padding: "32px 36px",
+  padding: "30px",
   boxShadow: "0 32px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
   scrollbarWidth: "none",
+  msOverflowStyle: "none",
 }
 
 const brandRow = {
   display: "flex",
   alignItems: "center",
-  gap: "10px",
-  marginBottom: "24px",
+  gap: "8px",
+  marginBottom: "6px",
 }
 
 const brandDot = {
-  width: "10px",
-  height: "10px",
+  width: "8px",
+  height: "8px",
   borderRadius: "50%",
   background: "#a6192e",
   boxShadow: "0 0 8px #a6192e",
 }
 
 const brandText = {
-  fontSize: "14px",
+  fontSize: "12px",
   fontWeight: "600",
   color: "rgba(255,255,255,0.7)",
   letterSpacing: "0.08em",
@@ -277,46 +280,46 @@ const brandText = {
 }
 
 const title = {
-  fontSize: "24px",
+  fontSize: "18px",
   fontWeight: "700",
   color: "#ffffff",
   letterSpacing: "-0.02em",
-  marginBottom: "4px",
+  marginBottom: "1px",
   lineHeight: 1.1,
 }
 
 const subtitle = {
-  fontSize: "13px",
+  fontSize: "11px",
   color: "rgba(255,255,255,0.55)",
-  marginBottom: "18px",
+  marginBottom: "8px",
 }
 
 const twoCol = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
-  gap: "12px",
+  gap: "10px",
 }
 
-const fieldGroup = { marginBottom: "10px" }
+const fieldGroup = { marginBottom: "5px" }
 
 const labelStyle = {
   display: "block",
-  fontSize: "11px",
+  fontSize: "10px",
   fontWeight: "600",
   color: "rgba(255,255,255,0.65)",
   letterSpacing: "0.06em",
   textTransform: "uppercase",
-  marginBottom: "7px",
+  marginBottom: "3px",
 }
 
 const inputStyle = {
   width: "100%",
-  padding: "10px 14px",
+  padding: "7px 12px",
   borderRadius: "10px",
   border: "1px solid rgba(255,255,255,0.18)",
   background: "rgba(255,255,255,0.08)",
   color: "#ffffff",
-  fontSize: "14px",
+  fontSize: "13px",
   outline: "none",
   boxSizing: "border-box",
   transition: "border-color 0.2s, background 0.2s",
@@ -329,12 +332,12 @@ const selectWrapper = {
 
 const selectStyle = {
   width: "100%",
-  padding: "10px 36px 10px 14px",
+  padding: "7px 36px 7px 12px",
   borderRadius: "10px",
   border: "1px solid rgba(255,255,255,0.18)",
   background: "#2a1a1e",
   color: "#ffffff",
-  fontSize: "14px",
+  fontSize: "13px",
   outline: "none",
   boxSizing: "border-box",
   appearance: "none",
@@ -379,25 +382,28 @@ const eyeStyle = {
 
 const btnStyle = {
   width: "100%",
-  padding: "14px",
-  marginTop: "6px",
+  padding: "12px",
+  marginTop: "16px",
   background: "linear-gradient(135deg, #a6192e, #c0202e)",
   color: "#ffffff",
   border: "none",
   borderRadius: "12px",
-  fontSize: "16px",
+  fontSize: "15px",
   fontWeight: "700",
   cursor: "pointer",
   letterSpacing: "0.02em",
   boxShadow: "0 8px 24px rgba(166,25,46,0.45)",
   transition: "transform 0.15s, box-shadow 0.15s",
+  flexShrink: 0,
 }
 
 const footerText = {
-  marginTop: "20px",
+  marginTop: "16px",
+  paddingBottom: "8px",
   textAlign: "center",
-  fontSize: "14px",
+  fontSize: "13px",
   color: "rgba(255,255,255,0.5)",
+  flexShrink: 0,
 }
 
 const linkStyle = {

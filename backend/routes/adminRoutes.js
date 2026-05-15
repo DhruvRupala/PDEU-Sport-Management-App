@@ -2,7 +2,7 @@ const express = require("express")
 const router  = express.Router()
 
 const {
-  getStats,
+  getStats, getDashboardAnalytics,
   getPendingUsers, getAllUsers, updateUserStatus,
   getAllManagers, createManager, deleteManager,
   getUniversityCodes, createUniversityCode, toggleUniversityCode, deleteUniversityCode
@@ -13,8 +13,9 @@ const { protect, adminOnly } = require("../middleware/authMiddleware")
 // All admin routes are protected + admin only
 router.use(protect, adminOnly)
 
-// Stats
+// Stats & Analytics
 router.get("/stats", getStats)
+router.get("/analytics", getDashboardAnalytics)
 
 // Users
 router.get("/users", getAllUsers)

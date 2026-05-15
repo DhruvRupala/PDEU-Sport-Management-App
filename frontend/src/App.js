@@ -14,6 +14,7 @@ import Payment from "./pages/Payment"
 import SportRegistration from "./pages/SportRegistration"
 import Live from "./pages/Live"
 import AdminDashboard from "./pages/AdminDashboard"
+import ParticipationDashboard from "./pages/ParticipationDashboard"
 
 const AUTH_ROUTES = ["/login", "/register"]
 
@@ -23,8 +24,8 @@ function Layout() {
 
   return (
     <>
-      {!isAuthPage && <Navbar />}
-      {!isAuthPage && <SubBar />}
+      <Navbar />
+      <SubBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
@@ -36,6 +37,7 @@ function Layout() {
         <Route path="/register" element={<Register />} />
         <Route path="/sport-registration/:eventId/:sportId" element={<SportRegistration />} />
         <Route path="/payment/:eventId/:sportId" element={<Payment />} />
+        <Route path="/profile" element={<ParticipationDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/manager" element={<AdminDashboard />} />
       </Routes>

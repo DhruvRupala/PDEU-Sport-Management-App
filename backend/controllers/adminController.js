@@ -1,5 +1,8 @@
 const User           = require("../models/User")
 const UniversityCode = require("../models/UniversityCode")
+const Event          = require("../models/Event")
+const Sport          = require("../models/Sport")
+const Registration   = require("../models/Registration")
 const bcrypt         = require("bcryptjs")
 
 // ─── STATS (dashboard overview) ──────────────────────────────────
@@ -162,8 +165,104 @@ const deleteUniversityCode = async (req, res) => {
   }
 }
 
+// ─── DASHBOARD ANALYTICS (comprehensive) ─────────────────────────
+const getDashboardAnalytics = async (req, res) => {
+  try {
+    // ── User counts ──
+    const [totalStudents, activeStudents, pendingUsers, rejectedUsers, totalManagers] = await Promise.all([
+      User.countDocuments({ role: "student" }),
+      User.countDocuments({ role: "student", status: "active" }),
+      User.countDocuments({ status: "pending" }),
+      User.countDocuments({ status: "rejected" }),
+      User.countDocuments({ role: "manager" })
+    ])
+
+    // ── Event counts by status ──
+    const [totalEvents, eventsOpenSoon, eventsRegOpen, eventsOngoing, eventsClosed] = await Promise.all([
+      Event.countDocuments(),
+      Event.countDocuments({ status: "open soon" }),
+      Event.countDocuments({ status: "registration open" }),
+      Event.countDocuments({ status: "ongoing" }),
+      Event.countDocuments({ status: "closed" })
+    ])
+
+    // ── Registration & payment stats ──
+    const [totalRegistrations, paymentsCompleted, paymentsPending, paymentsFailed] = await Promise.all([
+      Registration.countDocuments(),
+      Registration.countDocuments({ payment_status: "completed" }),
+      Registration.countDocuments({ payment_status: "pending" }),
+      Registration.countDocuments({ payment_status: "failed" })
+    ])
+
+    // ── Sport breakdown ──
+    const [totalSports, individualSports, teamSports] = await Promise.all([
+      Sport.countDocuments(),
+      Sport.countDocuments({ type: "individual" }),
+      Sport.countDocuments({ type: "team" })
+    ])
+
+    // ── Recent registrations (last 10) ──
+    const recentRegistrations = await Registration.find()
+      .populate("user_id", "name email university_name")
+      .populate("event_id", "event_name event_type")
+      .populate("sport_id", "sport_name type")
+      .sort({ createdAt: -1 })
+      .limit(10)
+
+    // ── 7-day registration trend ──
+    const sevenDaysAgo = new Date()
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6)
+    sevenDaysAgo.setHours(0, 0, 0, 0)
+
+    const trendData = await Registration.aggregate([
+      { $match: { createdAt: { $gte: sevenDaysAgo } } },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ])
+
+    // Fill missing days with 0
+    const trend = []
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(sevenDaysAgo)
+      d.setDate(d.getDate() + i)
+      const key = d.toISOString().split("T")[0]
+      const found = trendData.find(t => t._id === key)
+      trend.push({
+        date: key,
+        label: d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }),
+        count: found ? found.count : 0
+      })
+    }
+
+    // ── University distribution (top 8) ──
+    const universityDist = await User.aggregate([
+      { $match: { role: "student" } },
+      { $group: { _id: "$university_name", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 8 }
+    ])
+
+    res.json({
+      users: { totalStudents, activeStudents, pendingUsers, rejectedUsers, totalManagers },
+      events: { totalEvents, eventsOpenSoon, eventsRegOpen, eventsOngoing, eventsClosed },
+      registrations: { totalRegistrations, paymentsCompleted, paymentsPending, paymentsFailed },
+      sports: { totalSports, individualSports, teamSports },
+      recentRegistrations,
+      trend,
+      universityDistribution: universityDist.map(u => ({ name: u._id || "Unknown", count: u.count }))
+    })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
 module.exports = {
-  getStats,
+  getStats, getDashboardAnalytics,
   getPendingUsers, getAllUsers, updateUserStatus,
   getAllManagers, createManager, deleteManager,
   getUniversityCodes, createUniversityCode, toggleUniversityCode, deleteUniversityCode

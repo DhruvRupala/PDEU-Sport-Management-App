@@ -113,7 +113,7 @@ function Login() {
 // ── Styles ────────────────────────────────────────────────────────
 const pageWrapper = {
   position: "relative",
-  height: "100vh",
+  height: "calc(100vh - 150px)",
   overflow: "hidden",
   display: "flex",
   alignItems: "center",
