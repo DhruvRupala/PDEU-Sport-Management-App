@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import API from "../services/api"
 
@@ -28,7 +28,7 @@ function ParticipationDashboard() {
   const navigate = useNavigate()
   const name = localStorage.getItem("name")
 
-  const fetchDashboard = React.useCallback(async () => {
+  const fetchDashboard = useCallback(async () => {
     try {
       const res = await API.get("/registrations/dashboard")
       setData(res.data)
