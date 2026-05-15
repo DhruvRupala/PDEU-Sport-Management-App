@@ -1,8 +1,6 @@
 import React from "react"
-import { useNavigate } from "react-router-dom"
 
 function Live() {
-  const navigate = useNavigate()
 
   return (
     <div style={container}>

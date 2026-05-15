@@ -28,13 +28,7 @@ function ParticipationDashboard() {
   const navigate = useNavigate()
   const name = localStorage.getItem("name")
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) { navigate("/login"); return }
-    fetchDashboard()
-  }, [navigate])
-
-  const fetchDashboard = async () => {
+  const fetchDashboard = React.useCallback(async () => {
     try {
       const res = await API.get("/registrations/dashboard")
       setData(res.data)
@@ -44,7 +38,13 @@ function ParticipationDashboard() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [navigate])
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) { navigate("/login"); return }
+    fetchDashboard()
+  }, [navigate, fetchDashboard])
 
   const unreadCount = data?.notifications?.filter(n => !n.read)?.length || 0
 

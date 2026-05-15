@@ -1,5 +1,5 @@
 function MyTeamsTab({ data }) {
-  const { registrations, userTeams } = data
+  const { registrations } = data
 
   // Build team info from registrations
   const teamRegistrations = registrations.filter(r => r.team_name)

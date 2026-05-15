@@ -117,17 +117,7 @@ const primaryBtn = {
   fontSize: "16px",
 }
 
-const secondaryBtn = {
-  padding: "14px 28px",
-  background: "transparent",
-  color: "white",
-  border: "1px solid rgba(255,255,255,0.3)",
-  borderRadius: "30px", // pill shape
-  cursor: "pointer",
-  fontWeight: "600",
-  fontSize: "16px",
-  backdropFilter: "blur(10px)"
-}
+
 
 const section = {
   padding: "80px 20px",
