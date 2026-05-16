@@ -204,14 +204,14 @@ const spinner = { width: 36, height: 36, border: "4px solid #eee", borderTop: "4
 const pageTitle = { fontSize: 26, fontWeight: 800, color: "#1a1a1a", margin: 0 }
 const pageSubtitle = { fontSize: 14, color: "#888", marginTop: 4 }
 
-const kpiGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 16, marginBottom: 24 }
-const kpiCard = { background: "#fff", borderRadius: 14, padding: "20px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", textAlign: "center", transition: "transform 0.2s, box-shadow 0.2s" }
+const kpiGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 12, marginBottom: 24 }
+const kpiCard = { background: "#fff", borderRadius: 14, padding: "clamp(14px, 3vw, 20px) clamp(12px, 2vw, 18px)", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", textAlign: "center", transition: "transform 0.2s, box-shadow 0.2s" }
 const kpiIcon = { width: 40, height: 40, borderRadius: 10, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 18, marginBottom: 10 }
-const kpiValue = { fontSize: 30, fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }
+const kpiValue = { fontSize: "clamp(22px, 4vw, 30px)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }
 const kpiLabel = { fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginTop: 4 }
 
-const chartsRow = { display: "flex", gap: 16, marginBottom: 20, flexWrap: "wrap" }
-const chartCard = { background: "#fff", borderRadius: 14, padding: "20px 24px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", minWidth: 0 }
+const chartsRow = { display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }
+const chartCard = { background: "#fff", borderRadius: 14, padding: "clamp(14px, 3vw, 20px) clamp(14px, 3vw, 24px)", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", minWidth: 0, flex: "1 1 280px" }
 const chartTitle = { fontSize: 15, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", display: "flex", alignItems: "center" }
 const noData = { color: "#bbb", textAlign: "center", padding: "40px 0", fontSize: 14 }
 

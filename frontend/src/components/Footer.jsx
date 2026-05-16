@@ -6,13 +6,13 @@ function Footer() {
       <div style={container}>
 
         {/* LEFT */}
-        <div>
+        <div style={footerCol}>
           <h4>Sports Portal</h4>
           <p>University event management system.</p>
         </div>
 
         {/* MIDDLE */}
-        <div>
+        <div style={footerCol}>
           <h5>Quick Links</h5>
           <p>Home</p>
           <p>Events</p>
@@ -20,7 +20,7 @@ function Footer() {
         </div>
 
         {/* RIGHT */}
-        <div>
+        <div style={footerCol}>
           <h5>Contact</h5>
           <p>Gandhinagar, Gujarat</p>
           <p>Email: info@portal.com</p>
@@ -48,14 +48,23 @@ const footer = {
 const container = {
   display: "flex",
   justifyContent: "space-around",
-  padding: "30px"
+  padding: "30px",
+  flexWrap: "wrap",
+  gap: "20px"
+}
+
+const footerCol = {
+  minWidth: "180px",
+  flex: "1 1 180px",
+  textAlign: "center"
 }
 
 const bottom = {
   textAlign: "center",
   padding: "10px",
-  background: "#a6192e",   // PDEU red
+  background: "#a6192e",
   color: "white",
-  fontWeight: "500"
+  fontWeight: "500",
+  fontSize: "14px"
 }
 export default Footer

@@ -83,6 +83,8 @@ function Login() {
               style={eyeStyle}
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}
+              onTouchStart={() => setShowPassword(true)}
+              onTouchEnd={() => setShowPassword(false)}
             >
               <i className={showPassword ? "fa-regular fa-eye-slash" : "fa-regular fa-eye"} />
             </span>
@@ -113,8 +115,8 @@ function Login() {
 // ── Styles ────────────────────────────────────────────────────────
 const pageWrapper = {
   position: "relative",
-  height: "calc(100vh - 150px)",
-  overflow: "hidden",
+  minHeight: "calc(100vh - 150px)",
+  overflow: "auto",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -150,8 +152,8 @@ const glassCard = {
   backdropFilter: "blur(24px)",
   WebkitBackdropFilter: "blur(24px)",
   border: "1px solid rgba(255,255,255,0.22)",
-  borderRadius: "24px",
-  padding: "40px 40px",
+  borderRadius: "clamp(16px, 3vw, 24px)",
+  padding: "clamp(24px, 5vw, 40px)",
   boxShadow: "0 32px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
   scrollbarWidth: "none",
 }
@@ -180,7 +182,7 @@ const brandText = {
 }
 
 const title = {
-  fontSize: "32px",
+  fontSize: "clamp(24px, 5vw, 32px)",
   fontWeight: "700",
   color: "#ffffff",
   letterSpacing: "-0.02em",
@@ -189,7 +191,7 @@ const title = {
 }
 
 const subtitle = {
-  fontSize: "15px",
+  fontSize: "clamp(13px, 2vw, 15px)",
   color: "rgba(255,255,255,0.55)",
   marginBottom: "32px",
 }

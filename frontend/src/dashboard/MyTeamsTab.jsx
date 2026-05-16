@@ -180,7 +180,7 @@ const pageTitle = { fontSize: 26, fontWeight: 800, color: "#1a1a1a", margin: 0 }
 const pageSubtitle = { fontSize: 14, color: "#888", marginTop: 4, marginBottom: 0 }
 const emptyState = { textAlign: "center", padding: "60px 20px" }
 
-const teamGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(400px, 1fr))", gap: 20 }
+const teamGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))", gap: 16 }
 
 const teamCard = {
   background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)",
@@ -249,7 +249,7 @@ const teamFooter = {
   padding: "12px 24px", borderTop: "1px solid #f5f0e6"
 }
 
-const individualGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 14 }
+const individualGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(260px, 100%), 1fr))", gap: 14 }
 const individualCard = {
   background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)",
   borderRadius: 14, padding: "16px 20px",

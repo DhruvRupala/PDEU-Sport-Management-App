@@ -215,10 +215,10 @@ const activityDot = (i) => ({
 const pageTitle = { fontSize: 26, fontWeight: 800, color: "#1a1a1a", margin: 0 }
 const pageSubtitle = { fontSize: 14, color: "#888", marginTop: 4, marginBottom: 0 }
 
-const kpiGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 16, marginBottom: 24 }
-const kpiCard = { background: "#fff", borderRadius: 14, padding: "22px 18px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", textAlign: "center", transition: "transform 0.2s, box-shadow 0.2s" }
+const kpiGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(140px, 100%), 1fr))", gap: 12, marginBottom: 24 }
+const kpiCard = { background: "#fff", borderRadius: 14, padding: "clamp(14px, 3vw, 22px) clamp(12px, 2vw, 18px)", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", textAlign: "center", transition: "transform 0.2s, box-shadow 0.2s" }
 const kpiIcon = { width: 42, height: 42, borderRadius: 12, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 18, marginBottom: 10 }
-const kpiValue = { fontSize: 30, fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }
+const kpiValue = { fontSize: "clamp(22px, 4vw, 30px)", fontWeight: 800, color: "#1a1a1a", lineHeight: 1 }
 const kpiLabel = { fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", marginTop: 4 }
 
 const quickActionsRow = { display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap" }
@@ -231,14 +231,14 @@ const quickActionBtn = {
 
 const glassCard = {
   background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)",
-  borderRadius: 16, padding: "24px 28px",
+  borderRadius: 16, padding: "clamp(16px, 3vw, 24px) clamp(16px, 3vw, 28px)",
   boxShadow: "0 2px 16px rgba(0,0,0,0.06)", border: "1px solid rgba(255,255,255,0.4)",
   marginBottom: 20
 }
 
 const sectionTitle = { fontSize: 16, fontWeight: 700, color: "#1a1a1a", margin: "0 0 18px", display: "flex", alignItems: "center" }
 
-const twoCol = { display: "flex", gap: 20, marginBottom: 0, flexWrap: "wrap" }
+const twoCol = { display: "flex", gap: 16, marginBottom: 0, flexWrap: "wrap" }
 
 const emptyState = { textAlign: "center", padding: "40px 20px" }
 
@@ -250,7 +250,7 @@ const activityItem = {
 const paymentSummary = { display: "flex", flexDirection: "column", gap: 20 }
 const paymentLegend = { display: "flex", flexDirection: "column", gap: 10 }
 
-const matchGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }
+const matchGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))", gap: 14 }
 const matchCard = {
   background: "rgba(255,255,255,0.9)", borderRadius: 14, padding: "18px 20px",
   border: "1px solid #f0ebe0", transition: "transform 0.2s, box-shadow 0.2s"

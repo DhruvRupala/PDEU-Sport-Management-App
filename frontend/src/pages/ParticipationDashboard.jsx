@@ -25,8 +25,18 @@ function ParticipationDashboard() {
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState("overview")
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const navigate = useNavigate()
   const name = localStorage.getItem("name")
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const fetchDashboard = useCallback(async () => {
     try {
@@ -47,6 +57,10 @@ function ParticipationDashboard() {
   }, [navigate, fetchDashboard])
 
   const unreadCount = data?.notifications?.filter(n => !n.read)?.length || 0
+
+  const handleTabClick = (key) => {
+    setActiveTab(key)
+  }
 
   if (loading) {
     return (
@@ -82,6 +96,40 @@ function ParticipationDashboard() {
     }
   }
 
+  // Mobile: horizontal scrollable tabs at top
+  if (isMobile) {
+    return (
+      <div style={{ background: "#f5f0e6", minHeight: "calc(100vh - 150px)" }}>
+        {/* Mobile tab bar */}
+        <div style={mobileTabBar}>
+          {TABS.map(t => (
+            <button
+              key={t.key}
+              onClick={() => handleTabClick(t.key)}
+              style={activeTab === t.key ? mobileTabActive : mobileTab}
+            >
+              <div style={{ position: "relative" }}>
+                <i className={`fa-solid ${t.icon}`} style={{ fontSize: 16 }} />
+                {t.key === "notifications" && unreadCount > 0 && (
+                  <div style={notifDot}>{unreadCount > 9 ? "9+" : unreadCount}</div>
+                )}
+              </div>
+              <span style={{ fontSize: 10, marginTop: 2 }}>{t.label.split(" ").pop()}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Main content */}
+        <main style={mainMobile}>
+          <div className="animate-fade" key={activeTab}>
+            {renderTab()}
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  // Desktop: sidebar layout
   return (
     <div style={wrapper}>
       {/* ── SIDEBAR ── */}
@@ -107,7 +155,7 @@ function ParticipationDashboard() {
           {TABS.map(t => (
             <button
               key={t.key}
-              onClick={() => setActiveTab(t.key)}
+              onClick={() => handleTabClick(t.key)}
               style={activeTab === t.key ? activeNavBtn : navBtn}
               title={t.label}
             >
@@ -204,6 +252,35 @@ const sidebarFooter = {
 }
 
 const main = { flex: 1, padding: "28px 32px", overflowY: "auto", minWidth: 0 }
+const mainMobile = { padding: "16px 12px", minHeight: "calc(100vh - 220px)" }
+
+/* Mobile horizontal tab bar */
+const mobileTabBar = {
+  display: "flex",
+  overflowX: "auto",
+  background: "linear-gradient(180deg, #1a1520 0%, #231c2b 100%)",
+  padding: "8px 4px",
+  gap: 2,
+  borderBottom: "1px solid rgba(166,25,46,0.3)",
+  WebkitOverflowScrolling: "touch",
+  scrollbarWidth: "none",
+  msOverflowStyle: "none"
+}
+
+const mobileTabBase = {
+  display: "flex", flexDirection: "column", alignItems: "center",
+  padding: "8px 12px", border: "none", borderRadius: 8,
+  cursor: "pointer", fontSize: 11, fontWeight: 500,
+  transition: "all 0.2s", whiteSpace: "nowrap", flexShrink: 0,
+  minWidth: 56
+}
+
+const mobileTab = { ...mobileTabBase, background: "transparent", color: "rgba(255,255,255,0.5)" }
+const mobileTabActive = {
+  ...mobileTabBase,
+  background: "rgba(166,25,46,0.25)", color: "#fff",
+  borderBottom: "2px solid #a6192e"
+}
 
 const loaderWrap = {
   display: "flex", flexDirection: "column", alignItems: "center",

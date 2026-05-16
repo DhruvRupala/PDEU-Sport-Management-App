@@ -12,16 +12,12 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600)
 
   useEffect(() => {
-    document.body.style.overflow = "hidden"
-    document.documentElement.style.overflow = "hidden"
-    document.body.style.margin = "0"
-    return () => {
-      document.body.style.overflow = ""
-      document.documentElement.style.overflow = ""
-      document.body.style.margin = ""
-    }
+    const handleResize = () => setIsMobile(window.innerWidth <= 600)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [])
 
   const isPDEU = form.email.endsWith("@pdpu.ac.in") || form.email.endsWith("@pdeu.ac.in")
@@ -68,6 +64,10 @@ function Register() {
     }
   }
 
+  const twoColStyle = isMobile
+    ? { display: "grid", gridTemplateColumns: "1fr", gap: "5px" }
+    : { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }
+
   return (
     <div style={pageWrapper}>
       {/* Full-page background */}
@@ -86,7 +86,7 @@ function Register() {
         <p style={subtitle}>Join the PDEU Sports community</p>
 
         {/* Two-column row for Name & Phone */}
-        <div style={twoCol}>
+        <div style={twoColStyle}>
           <div style={fieldGroup}>
             <label style={labelStyle}>Full Name *</label>
             <input name="name" onChange={handleChange} placeholder="John Doe" style={inputStyle}
@@ -114,7 +114,7 @@ function Register() {
         </div>
 
         {/* Two-column row for Roll No & Gender */}
-        <div style={twoCol}>
+        <div style={twoColStyle}>
           <div style={fieldGroup}>
             <label style={labelStyle}>Roll No</label>
             <input name="roll_no" onChange={handleChange} placeholder="22CE001" style={inputStyle}
@@ -159,7 +159,7 @@ function Register() {
         )}
 
         {/* Two-column row for passwords */}
-        <div style={twoCol}>
+        <div style={twoColStyle}>
           <div style={fieldGroup}>
             <label style={labelStyle}>Password *</label>
             <div style={{ position: "relative" }}>
@@ -174,7 +174,9 @@ function Register() {
               />
               <span style={eyeStyle}
                 onMouseDown={() => setShowPassword(true)}
-                onMouseUp={() => setShowPassword(false)}>
+                onMouseUp={() => setShowPassword(false)}
+                onTouchStart={() => setShowPassword(true)}
+                onTouchEnd={() => setShowPassword(false)}>
                 <i className={showPassword ? "fa-regular fa-eye-slash" : "fa-regular fa-eye"} />
               </span>
             </div>
@@ -212,13 +214,14 @@ function Register() {
 // ── Styles ────────────────────────────────────────────────────────
 const pageWrapper = {
   position: "relative",
-  height: "calc(100vh - 130px)",
+  minHeight: "calc(100vh - 130px)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "20px",
   fontFamily: "'Inter', sans-serif",
   boxSizing: "border-box",
+  overflow: "auto",
 }
 
 const bgLayer = {
@@ -243,14 +246,14 @@ const glassCard = {
   zIndex: 2,
   width: "100%",
   maxWidth: "640px",
-  maxHeight: "100%",
+  maxHeight: "calc(100vh - 40px)",
   overflowY: "auto",
   background: "rgba(255,255,255,0.10)",
   backdropFilter: "blur(24px)",
   WebkitBackdropFilter: "blur(24px)",
   border: "1px solid rgba(255,255,255,0.22)",
-  borderRadius: "24px",
-  padding: "30px",
+  borderRadius: "clamp(16px, 3vw, 24px)",
+  padding: "clamp(20px, 4vw, 30px)",
   boxShadow: "0 32px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.25)",
   scrollbarWidth: "none",
   msOverflowStyle: "none",
@@ -280,7 +283,7 @@ const brandText = {
 }
 
 const title = {
-  fontSize: "18px",
+  fontSize: "clamp(16px, 3vw, 18px)",
   fontWeight: "700",
   color: "#ffffff",
   letterSpacing: "-0.02em",
@@ -292,12 +295,6 @@ const subtitle = {
   fontSize: "11px",
   color: "rgba(255,255,255,0.55)",
   marginBottom: "8px",
-}
-
-const twoCol = {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "10px",
 }
 
 const fieldGroup = { marginBottom: "5px" }

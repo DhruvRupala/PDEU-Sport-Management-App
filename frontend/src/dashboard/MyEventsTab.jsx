@@ -204,7 +204,7 @@ const filterBtnActive = {
 
 const emptyState = { textAlign: "center", padding: "60px 20px" }
 
-const eventGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: 20 }
+const eventGrid = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))", gap: 16 }
 
 const eventCard = {
   background: "rgba(255,255,255,0.85)", backdropFilter: "blur(12px)",

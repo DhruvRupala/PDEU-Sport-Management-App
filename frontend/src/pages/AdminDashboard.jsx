@@ -21,6 +21,7 @@ const TABS = [
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview")
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const role = localStorage.getItem("role")
   const name = localStorage.getItem("name")
   const navigate = useNavigate()
@@ -28,6 +29,19 @@ function AdminDashboard() {
   useEffect(() => {
     if (role !== "admin" && role !== "manager") navigate("/")
   }, [role, navigate])
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+    }
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  const handleTabClick = (key) => {
+    setActiveTab(key)
+  }
 
   const renderTab = () => {
     switch (activeTab) {
@@ -42,6 +56,34 @@ function AdminDashboard() {
     }
   }
 
+  // Mobile: horizontal scrollable tabs
+  if (isMobile) {
+    return (
+      <div style={{ background: "#f5f0e6", minHeight: "calc(100vh - 150px)" }}>
+        {/* Mobile tab bar */}
+        <div style={mobileTabBar}>
+          {TABS.map(t => (
+            <button
+              key={t.key}
+              onClick={() => handleTabClick(t.key)}
+              style={activeTab === t.key ? mobileTabActive : mobileTab}
+            >
+              <i className={`fa-solid ${t.icon}`} style={{ fontSize: 15 }} />
+              <span style={{ fontSize: 10, marginTop: 2 }}>{t.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <main style={mainMobile}>
+          <div className="animate-fade" key={activeTab}>
+            {renderTab()}
+          </div>
+        </main>
+      </div>
+    )
+  }
+
+  // Desktop: sidebar layout
   return (
     <div style={wrapper}>
       {/* ── SIDEBAR ── */}
@@ -64,7 +106,7 @@ function AdminDashboard() {
           {TABS.map(t => (
             <button
               key={t.key}
-              onClick={() => setActiveTab(t.key)}
+              onClick={() => handleTabClick(t.key)}
               style={activeTab === t.key ? activeBtn : navBtnStyle}
               title={t.label}
             >
@@ -150,5 +192,34 @@ const sidebarFooter = {
 }
 
 const main = { flex: 1, padding: "28px 32px", overflowY: "auto", minWidth: 0 }
+const mainMobile = { padding: "16px 12px", minHeight: "calc(100vh - 220px)" }
+
+/* Mobile horizontal tab bar */
+const mobileTabBar = {
+  display: "flex",
+  overflowX: "auto",
+  background: "linear-gradient(180deg, #1a1520 0%, #231c2b 100%)",
+  padding: "8px 4px",
+  gap: 2,
+  borderBottom: "1px solid rgba(166,25,46,0.3)",
+  WebkitOverflowScrolling: "touch",
+  scrollbarWidth: "none",
+  msOverflowStyle: "none"
+}
+
+const mobileTabBase = {
+  display: "flex", flexDirection: "column", alignItems: "center",
+  padding: "8px 12px", border: "none", borderRadius: 8,
+  cursor: "pointer", fontSize: 11, fontWeight: 500,
+  transition: "all 0.2s", whiteSpace: "nowrap", flexShrink: 0,
+  minWidth: 56
+}
+
+const mobileTab = { ...mobileTabBase, background: "transparent", color: "rgba(255,255,255,0.5)" }
+const mobileTabActive = {
+  ...mobileTabBase,
+  background: "rgba(166,25,46,0.25)", color: "#fff",
+  borderBottom: "2px solid #a6192e"
+}
 
 export default AdminDashboard

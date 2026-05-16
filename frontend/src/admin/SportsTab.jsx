@@ -116,8 +116,8 @@ const typeBadge = (t) => ({
 
 const title = { fontSize: 26, fontWeight: 800, color: "#1a1a1a", margin: 0 }
 const subtitle = { fontSize: 14, color: "#888", marginTop: 4, marginBottom: 20 }
-const selectorCard = { background: "#fff", borderRadius: 14, padding: "18px 24px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", marginBottom: 20, maxWidth: 400 }
-const grid = { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }
+const selectorCard = { background: "#fff", borderRadius: 14, padding: "18px 24px", boxShadow: "0 2px 12px rgba(0,0,0,0.05)", marginBottom: 20, maxWidth: "100%" }
+const grid = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16, alignItems: "start" }
 const card = { background: "#fff", borderRadius: 14, padding: 24, boxShadow: "0 2px 12px rgba(0,0,0,0.05)" }
 const cardTitle = { fontSize: 16, fontWeight: 700, color: "#1a1a1a", margin: "0 0 18px", display: "flex", alignItems: "center" }
 const label = { display: "block", fontSize: 11, fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 4, marginTop: 12 }
