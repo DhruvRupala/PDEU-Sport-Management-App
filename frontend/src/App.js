@@ -26,21 +26,23 @@ function Layout() {
     <>
       <Navbar />
       <SubBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/live" element={<Live />} />
-        <Route path="/sports/:eventId" element={<Sports />} />
-        <Route path="/schedule/:sportId" element={<Schedule />} />
-        <Route path="/results/:sportId" element={<Results />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/sport-registration/:eventId/:sportId" element={<SportRegistration />} />
-        <Route path="/payment/:eventId/:sportId" element={<Payment />} />
-        <Route path="/profile" element={<ParticipationDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/manager" element={<AdminDashboard />} />
-      </Routes>
+      <div key={location.pathname} className="animate-fade">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/live" element={<Live />} />
+          <Route path="/sports/:eventId" element={<Sports />} />
+          <Route path="/schedule/:sportId" element={<Schedule />} />
+          <Route path="/results/:sportId" element={<Results />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/sport-registration/:eventId/:sportId" element={<SportRegistration />} />
+          <Route path="/payment/:eventId/:sportId" element={<Payment />} />
+          <Route path="/profile" element={<ParticipationDashboard />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/manager" element={<AdminDashboard />} />
+        </Routes>
+      </div>
       {!isAuthPage && <Footer />}
     </>
   )
